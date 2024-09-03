@@ -1,7 +1,6 @@
-
-
+import 'package:designspiration/StartScreens/SignIn.dart';
+import 'package:designspiration/StartScreens/SignUp.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          width: 300,
+          width: 285,
           height: 400,
           child: Align(
             alignment: Alignment.centerLeft,
@@ -62,16 +62,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black,
                           minimumSize: const Size(130, 50),
                         ),
                       child: Text('Sing Up', style: TextStyle(color: Colors.white, fontSize: 15),),
                       ),
-
+                      Spacer(),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white54,
                           minimumSize: const Size(130, 50),
