@@ -1,18 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 final _formKey = GlobalKey<FormState>();
+final TextEditingController _SignUpController = TextEditingController();
 
-class SignUp extends StatefulWidget {
-  @override
-  State<SignUp> createState() => SignUpPage();
-}
-
-class Password extends StatefulWidget {
-  @override
-  State<Password> createState() => PasswordPage();
-}
-
-
-class SignUpPage extends State<SignUp>{
+class SignUp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +26,7 @@ class SignUpPage extends State<SignUp>{
                 child: Column(
                 children: [
                   TextFormField(
+                    controller: _SignUpController,
                     decoration: InputDecoration(
                       labelText: "Full name",
                       border:  OutlineInputBorder(
@@ -52,8 +44,7 @@ class SignUpPage extends State<SignUp>{
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                      Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Password()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Password()),).then((_){_SignUpController;;});
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -79,7 +70,7 @@ class SignUpPage extends State<SignUp>{
   }
 }
 
-class PasswordPage extends State<Password>{
+class Password extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +114,7 @@ class PasswordPage extends State<Password>{
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => Password()));
+                                  MaterialPageRoute(builder: (context) => Code()));
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -146,5 +137,39 @@ class PasswordPage extends State<Password>{
       ),
     );
   }
+}
 
+class Code extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(backgroundColor: Colors.white,
+      body: Center(
+        child: Container(
+          height: 350,
+          width: 285,
+          child: const Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                Text('Confrim', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB')),
+                Text('your account', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB')),
+                Padding(
+                padding: EdgeInsets.only(top: 20.0), 
+                  child: Text('We have sent a verification code to your'),
+                ),
+                  Text('email. To continue, please enter the code'),
+                  Text('below.'),
+                  Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                    child: Text('Didn\'t receive a code? Resend'),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      )
+    );
+  }
 }
