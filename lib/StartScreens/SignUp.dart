@@ -1,7 +1,91 @@
-import 'package:flutter/cupertino.dart';
+import 'package:designspiration/StartScreens/SignIn.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-final _formKey = GlobalKey<FormState>();
-final TextEditingController _SignUpController = TextEditingController();
+import 'package:url_launcher/url_launcher.dart';
+
+class Email extends StatelessWidget{
+  const Email({super.key});
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Container(
+          width: 310,
+          height: 350,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+               const Text('Join the', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB'),),
+                const Text('Community', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB'),),
+                const Padding(padding: EdgeInsets.only(top: 20.0)),
+                Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          border:  OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 20.0)),
+                      ElevatedButton(
+                        onPressed: () {
+
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()),);
+
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          minimumSize: const Size(290, 50),
+
+                        ),
+                        child: const Text('Continue', style: TextStyle(color: Colors.white),),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 10.0)),
+                      RichText(textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        children: <TextSpan>[
+                        TextSpan(text: 'Have an account? '),
+                        TextSpan(text: 'Log In', recognizer: TapGestureRecognizer() .. onTap = () {Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()),);})
+                        ],
+                      ),
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 10.0)),
+                      RichText(textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          children: <TextSpan>[
+                            TextSpan(text: 'By continuing, you agree to Designspiration\'s '),
+                            TextSpan(text: 'Terms of Service', recognizer: TapGestureRecognizer() .. onTap = () => _launchURL('https://www.designspiration.com/about/terms-of-service/')),
+                            TextSpan(text: 'and acknowledge you’ve read our '),
+                            TextSpan(text: 'Privacy Policy', recognizer: TapGestureRecognizer() .. onTap = () => _launchURL('https://www.designspiration.com/about/privacy-policy/')),
+                          ],
+                        ),
+                      ),
+                  ],
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+
+    );
+  }
+}
 
 class SignUp extends StatelessWidget{
   @override
@@ -22,30 +106,23 @@ class SignUp extends StatelessWidget{
                 Text('your name', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB')),
                 Padding(padding: EdgeInsets.only(top: 20.0)),
               Form(
-                key: _formKey,
+
                 child: Column(
                 children: [
                   TextFormField(
-                    controller: _SignUpController,
                     decoration: InputDecoration(
                       labelText: "Full name",
                       border:  OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                      )
+                      ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your full name';
-                      }
-                      return null;
-                    },
                   ),
                   Padding(padding: EdgeInsets.only(top: 20.0)),
                   ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Password()),).then((_){_SignUpController;;});
-                      }
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Password()),);
+
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
@@ -55,22 +132,20 @@ class SignUp extends StatelessWidget{
                     child: Text ('Continue', style: TextStyle(color: Colors.white),),
                   )
                 ],
-              )
-              )
+              ),
+              ),
               ],
-
-            ),
-
-
-
-          ),
-        ),
+            )
+          )
+        )
       ),
     );
   }
 }
 
 class Password extends StatelessWidget{
+  const Password({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +164,7 @@ class Password extends StatelessWidget{
                   Text('Password', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB')),
                   Padding(padding: EdgeInsets.only(top: 20.0)),
                   Form(
-                    key: _formKey,
+
                     child: Column(
                       children: [
                         TextFormField(
@@ -112,10 +187,7 @@ class Password extends StatelessWidget{
                         Padding(padding: EdgeInsets.only(top: 20.0)),
                         ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => Code()));
-                            }
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Code()));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
@@ -140,6 +212,8 @@ class Password extends StatelessWidget{
 }
 
 class Code extends StatelessWidget {
+  const Code({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.white,
