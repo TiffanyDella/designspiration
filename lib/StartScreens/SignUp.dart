@@ -15,11 +15,12 @@ class Email extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Hello'),),
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          width: 310,
           height: 350,
+          width: 285,
           child: Align(
             alignment: Alignment.centerLeft,
             child: Column(
@@ -84,6 +85,7 @@ class Email extends StatelessWidget{
       ),
 
     );
+
   }
 }
 
@@ -91,11 +93,12 @@ class SignUp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Hello'),),
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          width: 285,
-          height: 300,
+            height: 300,
+            width: 285,
           child: Align(
             alignment: Alignment.centerLeft,
             child: Column(
@@ -149,11 +152,12 @@ class Password extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Hello'),),
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          height: 330,
-          width: 285,
+            height: 350,
+            width: 285,
           child: Align(
               alignment: Alignment.centerLeft,
               child: Column(
@@ -211,39 +215,87 @@ class Password extends StatelessWidget{
   }
 }
 
+
+
 class Code extends StatelessWidget {
-  const Code({super.key});
+  final List<TextEditingController> controllers = List.generate(6, (index) => TextEditingController());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Hello'),
+      ),
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
           height: 350,
-          width: 285,
-          child: const Align(
+          width: 350,
+          child: Align(
             alignment: Alignment.centerLeft,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                Text('Confrim', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB')),
-                Text('your account', style: TextStyle(color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB')),
+              children: <Widget>[
+                Text(
+                  'Confirm',
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB'),
+                ),
+                Text(
+                  'your account',
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 30, fontFamily: 'PoppinsEB'),
+                ),
                 Padding(
-                padding: EdgeInsets.only(top: 20.0), 
+                  padding: EdgeInsets.only(top: 20.0),
                   child: Text('We have sent a verification code to your'),
                 ),
-                  Text('email. To continue, please enter the code'),
-                  Text('below.'),
-                  Padding(
+                Text('email. To continue, please enter the code'),
+                Text('below.'),
+                Padding(
                   padding: EdgeInsets.only(top: 20.0),
-                    child: Text('Didn\'t receive a code? Resend'),
-                  ),
+                  child: Text('Didn\'t receive a code? Resend'),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: List.generate(6, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 40,
+                        child: TextField(
+                          controller: controllers[index],
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          maxLength: 1,
+                          decoration: InputDecoration(
+                            counterText: '',
+                            hintText: '-',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                  color: Colors.white, width: 2.0),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            if (value.length == 1 && index < 5) {
+                              FocusScope.of(context).nextFocus();
+                            } else if (value.isEmpty && index > 0) {
+                              FocusScope.of(context).previousFocus();
+                            }
+                          },
+                        ),
+                      ),
+                    );
+                  }),
+                ),
               ],
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }
+
